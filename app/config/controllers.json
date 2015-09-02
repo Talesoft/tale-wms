@@ -2,10 +2,8 @@
     "features": {
         "controllers": {
 
-            "loader": {
-                "path": "{{path}}/controllers",
-                "nameSpace": "{{nameSpace}}/Controller"
-            },
+            "path": "{{path}}/controllers",
+            "nameSpace": "{{nameSpace}}/Controller"
 
             "defaultController": "index",
             "defaultAction": "index",

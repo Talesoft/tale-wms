@@ -13,6 +13,10 @@
                 "path": "{{path}}/logs"
             },
             "level": "all"
+        },
+        "models": {
+
+            "database": "test"
         }
     }
 }

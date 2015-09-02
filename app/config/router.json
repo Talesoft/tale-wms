@@ -1,0 +1,13 @@
+{
+    "features": {
+        "router": {
+            "routes": {
+                "/:controller?/:action?/:id?.:format?": [ "@controllers", "dispatch" ]
+            },
+
+            "baseUrl": "{{url}}",
+
+            "auto": true
+        }
+    }
+}

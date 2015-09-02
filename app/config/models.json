@@ -1,0 +1,13 @@
+{
+    "features": {
+
+        "models": {
+
+            "path": "{{path}}/models",
+            "nameSpace": "{{nameSpace}}/Model",
+
+            "source": "data",
+            "database": "taleWms"
+        }
+    }
+}

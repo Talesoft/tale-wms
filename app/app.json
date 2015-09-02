@@ -9,19 +9,22 @@
     "version": "1.0",
     "stability": "development",
 
+    "requires": {
+        "talesoft/tale-blog": "<=5.3"
+    },
 
+    //Anything below here is actually OPTIONAL
+    //We just use the full set of possible configs to show what can be changed through config alone
+
+    //"path": "/path/to/this/app",
     "url": "http://localhost/tale-wms",
     "nameSpace": "Tale\\Wms",
 
-
+    "featureAliases": {},
     "features": {
         "config": {
-            "path": "{{path}}/config"
+            "path": "{{path}}/config",
+            "prefer": "debug"
         }
-    },
-
-
-    "requires": {
-        "talesoft/tale-blog": "<=5.3"
     }
 }

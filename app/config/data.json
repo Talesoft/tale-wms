@@ -1,15 +1,14 @@
 {
     "features": {
         "data": {
-            "sources": {
-                "common": {
-                    "adapter": "mysql",
-                    "options": {
-                        "host": "localhost",
-                        "user": "root",
-                        "password": "",
-                        "encoding": "utf8"
-                    }
+
+            "source": {
+                "adapter": "mysql",
+                "options": {
+                    "host": "localhost",
+                    "user": "root",
+                    "password": "",
+                    "encoding": "utf8"
                 }
             }
         }
