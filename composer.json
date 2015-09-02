@@ -1,0 +1,16 @@
+{
+    "name": "talesoft/tale-wms",
+    "description": "The Tale Warehouse Management System",
+    "minimum-stability": "dev",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Torben Köhn",
+            "email": "tk@talesoft.io"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "talesoft/tale-framework": ">=1.0"
+    }
+}

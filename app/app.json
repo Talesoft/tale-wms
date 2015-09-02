@@ -1,0 +1,27 @@
+{
+    "name": "talesoft/tale-wms",
+
+    "displayName": "Tale Warehouse Management System",
+    "description": "The Tale Warehouse Management System",
+    "tags": [ "warehouse", "storage", "management" ],
+
+
+    "version": "1.0",
+    "stability": "development",
+
+
+    "url": "http://localhost/tale-wms",
+    "nameSpace": "Tale\\Wms",
+
+
+    "features": {
+        "config": {
+            "path": "{{path}}/config"
+        }
+    },
+
+
+    "requires": {
+        "talesoft/tale-blog": "<=5.3"
+    }
+}

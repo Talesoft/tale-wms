@@ -1,0 +1,8 @@
+{
+    "features": {
+        "library": {
+            "path": "{{path}}/library",
+            "nameSpace": "{{nameSpace}}"
+        }
+    }
+}

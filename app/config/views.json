@@ -1,0 +1,32 @@
+{
+    "features": {
+        "views": {
+
+            "path": "{{path}}/themes",
+            "url": "{{url}}/themes",
+
+            "types": {
+                "view": {
+                    "directoryName": "views"
+                },
+                "style": {
+                    "directoryName": "styles"
+                }
+            },
+
+            "themes": [ "default" ],
+
+            "processors": {
+                "phtml": {
+                    "jade": "Tale\\Jade\\Processor"
+                },
+                "css": {
+                    "less": "Tale\\Wms\\Processor\\Less"
+                },
+                "js": {
+                    "ts": "Tale\\Wms\\Processor\\TypeScript"
+                }
+            }
+        }
+    }
+}
