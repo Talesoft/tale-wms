@@ -6,3 +6,4 @@ Thumbs.db
 /composer.phar
 /composer.lock
 /app/config/dev/app.json
+/app/config/dev/features.json

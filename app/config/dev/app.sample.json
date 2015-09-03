@@ -1,0 +1,8 @@
+{
+    "phpOptions": {
+        "displayErrors": 1,
+        "displayStartupErrors": 1,
+        "errorReporting": "{{errorLevels.all}}",
+        "xdebug.maxNestingLevel": 10000
+    }
+}

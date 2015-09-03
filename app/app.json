@@ -21,14 +21,17 @@
     "nameSpace": "Tale\\Wms",
 
     "configure": {
-        "path": "{{path}}/config"
-        //"include": [ "dev/app.json", "features/*", "dev/features.json" ]
+        "path": "{{path}}/config",
+        "include": [ "dev/app.json", "_features/*", "_dev/features.json" ]
     },
 
     "features": {
         "cache": {},
         "controller": {
             "nameSpace": "{{nameSpace}}\\Controller"
+        },
+        "data": {
+            "common": {}
         }
     }
 }
