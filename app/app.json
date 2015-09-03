@@ -20,11 +20,13 @@
     "url": "http://localhost/tale-wms",
     "nameSpace": "Tale\\Wms",
 
-    "featureAliases": {},
+    "configure": {
+        "path": "{{path}}/config"
+        //"include": [ "dev/app.json", "features/*", "dev/features.json" ]
+    },
+
     "features": {
-        "config": {
-            "path": "{{path}}/config",
-            "prefer": "debug"
-        }
+        "cache": {},
+        "controller": {}
     }
 }

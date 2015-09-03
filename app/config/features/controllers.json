@@ -3,7 +3,7 @@
         "controllers": {
 
             "path": "{{path}}/controllers",
-            "nameSpace": "{{nameSpace}}/Controller"
+            "nameSpace": "{{nameSpace}}/Controller",
 
             "defaultController": "index",
             "defaultAction": "index",

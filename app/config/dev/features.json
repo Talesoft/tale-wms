@@ -1,0 +1,8 @@
+{
+    "features": {
+        "models": {
+
+            "database": "test"
+        }
+    }
+}

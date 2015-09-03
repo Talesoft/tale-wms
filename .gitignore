@@ -5,4 +5,4 @@ Thumbs.db
 /vendor
 /composer.phar
 /composer.lock
-/app/config/debug.json
+/app/config/dev/app.json
