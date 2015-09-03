@@ -2,12 +2,7 @@
     "features": {
         "controllers": {
 
-            "path": "{{path}}/controllers",
-            "nameSpace": "{{nameSpace}}/Controller",
-
-            "defaultController": "index",
-            "defaultAction": "index",
-            "defaultId": null
+            "nameSpace": "{{nameSpace}}/Controller"
         }
     }
 }

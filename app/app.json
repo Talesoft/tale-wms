@@ -27,6 +27,8 @@
 
     "features": {
         "cache": {},
-        "controller": {}
+        "controller": {
+            "nameSpace": "{{nameSpace}}\\Controller"
+        }
     }
 }

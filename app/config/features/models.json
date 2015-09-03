@@ -6,7 +6,7 @@
             "path": "{{path}}/models",
             "nameSpace": "{{nameSpace}}/Model",
 
-            "source": "data",
+            "source": "common",
             "database": "taleWms"
         }
     }

@@ -2,7 +2,7 @@
     "features": {
         "data": {
 
-            "source": {
+            "common": {
                 "adapter": "mysql",
                 "options": {
                     "host": "localhost",
