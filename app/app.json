@@ -26,12 +26,12 @@
     },
 
     "features": {
+        "data": {
+            "common": {}
+        },
         "cache": {},
         "controller": {
             "nameSpace": "{{nameSpace}}\\Controller"
-        },
-        "data": {
-            "common": {}
         }
     }
 }
