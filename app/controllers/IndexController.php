@@ -4,10 +4,19 @@ namespace Tale\Wms\Controller;
 
 use Tale\App\ControllerBase;
 
-class IndexController extends ControllerBase {
+class IndexController extends ControllerBase
+{
 
-    public function indexAction() {
+    public function indexAction()
+    {
 
-        return $this->view();
+        return $this->viewCached();
+    }
+
+    public function someDataAction()
+    {
+
+
+        return ['some' => 'random', 'data' => 42];
     }
 }

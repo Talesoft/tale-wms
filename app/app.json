@@ -30,8 +30,16 @@
             "common": {}
         },
         "cache": {},
+        "router": {
+            "baseUrl": "{{url}}"
+        },
+        "view": {},
         "controller": {
-            "nameSpace": "{{nameSpace}}\\Controller"
+            "nameSpace": "{{nameSpace}}\\Controller",
+            "args": {
+                "lang": "en",
+                "siteName": "Tale WMS"
+            }
         },
         "library": {}
     }
