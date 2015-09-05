@@ -10,6 +10,8 @@ class IndexController extends ControllerBase
     public function indexAction()
     {
 
+        var_dump(iterator_to_array($this->db->getModelFields('persons')));
+
         return $this->viewCached();
     }
 

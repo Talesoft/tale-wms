@@ -41,6 +41,15 @@
                 "siteName": "Tale WMS"
             }
         },
-        "library": {}
+        "library": {
+            "nameSpace": "{{nameSpace}}"
+        },
+        "model": {
+            "db": {
+                "source": "common",
+                "database": "test",
+                "nameSpace": "{{nameSpace}}\\Model"
+            }
+        }
     }
 }
