@@ -8,6 +8,6 @@ class ErrorController extends ControllerBase {
 
     public function notFoundAction() {
 
-        return $this->view();
+        return $this->view(['error' => 'File not found', 'errorCode' => 404]);
     }
 }

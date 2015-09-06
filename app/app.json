@@ -27,11 +27,17 @@
 
     "features": {
         "data": {
-            "common": {}
+            "common": {
+                "lifeTime": 0
+            }
         },
         "cache": {},
         "router": {
-            "baseUrl": "{{url}}"
+            "baseUrl": "{{url}}",
+            "routes": {
+                "/data/:controller?/:action?/:id?.:format?": ["@{{nameSpace}}\\Router", "routeData"],
+                "/:controller?/:action?/:id?.:format?": ["@router", "dispatchController"]
+            }
         },
         "view": {},
         "controller": {
@@ -41,6 +47,7 @@
                 "siteName": "Tale WMS"
             }
         },
+        "form": {},
         "library": {
             "nameSpace": "{{nameSpace}}"
         },
