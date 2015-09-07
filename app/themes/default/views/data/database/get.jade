@@ -1,0 +1,53 @@
+
+extends ../layout
+
+block content
+
+    .container
+
+        .page-header
+            h1= $title
+
+        .row
+            .col-md-4
+                .panel.panel-default
+                    .panel-heading
+                        h3.panel-title Database Status
+                    .panel-body
+                        if $exists
+                            p.text-success Exists
+                        else
+                            p.text-danger Doesnt exist
+
+                .panel.panel-default
+                    .panel-heading
+                        h3.panel-title Actions
+                    .panel-body
+                        a.btn.btn-default.btn-block(href=$indexUrl) Back to Database Index
+                        unless $exists
+                            a.btn.btn-success.btn-block(href=$createUrl) Create Database
+                        if $exists
+                            a.btn.btn-danger.btn-block(href=$removeUrl) Remove Database
+                            a.btn.btn-info.btn-block(href=$tableIndexUrl) Table Index
+            .col-md-8
+                unless $exists
+                    .alert.alert-info
+                        strong Database not created
+                        p The Database youre viewing doesnt exist yet. Do you want to create it now?
+                        a(href=$createUrl) Create Database
+                else
+                    .panel.panel-default
+                        .panel-heading
+                            h3.panel-title Tables in #{name}
+                        .table-responsive
+                            table.table.table-striped.table-bordered
+                                thead
+                                    tr
+                                        th Table name
+                                        th Actions
+                                tbody
+                                    each $table in $tables
+                                        tr
+                                            td= $table['name']
+                                            td
+                                                a.btn.btn-primary.btn-block(href=$table['getUrl']) Table Details

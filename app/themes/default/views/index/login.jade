@@ -1,0 +1,77 @@
+
+extends ../layout
+
+block append styles
+	style.
+
+		.login-container {
+			margin-top: 120px;
+		}
+
+
+
+block append scripts
+	script(src='#{baseUrl}/scripts/hot-keys.js')
+	script(src='#{baseUrl}/scripts/scan-codes.js')
+	script.
+
+		(function( $ ) {
+
+			var $loginForm = $( 'form.login-form' );
+
+			$( window ).on( 'codeScan', function( e ) {
+
+				$loginForm.disable();
+				$.post( '#{baseUrl}/index/scan-code-login.json', { scanCode: e.code }, function( result ) {
+
+					$loginForm.enable();
+
+					if( result.success )
+						window.location.href = '#{baseUrl}/index';
+					else
+						window.alert( "Fehler:\n" + result.errors.join( "\n" ) );
+				});
+			});
+		})( jQuery );
+
+
+
+
+block content
+
+	.container.login-container
+
+		.row
+			.col-md-6.col-md-offset-3
+				.panel.panel-default
+
+					.panel-heading
+						h2.panel-title Login
+
+					form.login-form.form.form-horizontal(action='#{baseUrl}/index/login', method='post', enctype='application/x-www-form-urlencoded')
+
+						.panel-body
+
+							.alert.alert-info
+								strong Benutzer auswählen
+								p Bitte wählen Sie unten einen Benutzer aus oder scannen Sie alternativ den Code auf Ihrem Badge
+
+							if $triedLogin && !$success
+								.alert.alert-warning
+									ul
+									each $error in $errors
+										li= $error
+
+							.form-group
+								label.control-label.col-md-3 Benutzer:
+								.col-md-9
+									select.form-control(name='userId')
+										each $user in $allUsers
+											option(value=$user->id)= $user->name
+						.panel-footer
+							button.btn.btn-primary.btn-block.btn-lg(type='submit') 
+								i.fa.fa-fw.fa-unlock-alt
+								| Anmelden
+
+
+	.modal.fade

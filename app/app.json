@@ -47,14 +47,13 @@
                 "siteName": "Tale WMS"
             }
         },
+        "session": {},
         "form": {},
-        "library": {
-            "nameSpace": "{{nameSpace}}"
-        },
+        "library": {},
         "model": {
             "db": {
                 "source": "common",
-                "database": "test",
+                "database": "taleWms",
                 "nameSpace": "{{nameSpace}}\\Model"
             }
         }

@@ -1,0 +1,48 @@
+
+extends ../layout
+
+block content
+
+    .container
+
+        .page-header
+            h1= $title
+
+        .panel.panel-default
+            table.table.table-striped.table-bordered
+                thead
+                    tr
+                        th Database name
+                        th Actions
+                tbody
+                    tr
+                        td: input.form-control.input-block#createNameInput(type='text', name='name', placeholder='New Database Name')
+                        td: button.btn.btn-success.btn-block#createButton(data-href=$createUrl) Create
+                    each $database in $databases
+                        tr
+                            td= $database['name']
+                            td
+                                .row
+                                    .col-md-6: a.btn.btn-primary.btn-block(href=$database['getUrl']) Database Details
+                                    .col-md-6: a.btn.btn-info.btn-block(href=$database['tableIndexUrl']) Table Index
+
+
+block append scripts
+    script.
+
+        $(function() {
+
+            $('#createButton').click(function(e) {
+                e.preventDefault();
+
+                var name = $('#createNameInput').val();
+
+                if (!name.match(/^[a-z0-9\-_]+$/i)) {
+
+                    window.alert('Database name can only consist of a-z, A-Z, - and _. It also can\'t be empty');
+                    return;
+                }
+
+                window.location.href = $.interpolate($(this).data('href'), {'name': name});
+            });
+        });

@@ -1,0 +1,26 @@
+
+extends ../layout
+
+block content
+
+    .container
+
+        .page-header
+            h1= $title
+
+        .panel.panel-default
+            .panel-heading
+                h3.panel-title Database Status:
+            .panel-body
+                if $removed
+                    p.text-success Removed
+                else
+                    p.text-danger Not removed
+
+        .panel.panel-default
+            .panel-heading
+                h3.panel-title Actions
+            .panel-body
+                .row
+                    .col-md-6: a.btn.btn-default.btn-block(href=$getUrl) Back to Database Details
+                    .col-md-6: a.btn.btn-default.btn-block(href=$indexUrl) Back to Database Index

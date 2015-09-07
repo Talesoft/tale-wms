@@ -8,12 +8,14 @@ use Tale\Wms\Model\TimestampTrait;
 
 class Person extends ModelBase {
     use TimestampTrait;
+    use ScanCodeTrait;
 
     public $firstName = 'string(128)';
-    public $lastName = 'string(128)';
+    public $lastName = 'string(128) optional';
 
-    public $loginName = 'string(64) required';
-    public $passwordHash = 'text';
+    public $role = 'enum(admin,reader,user,guest) default(guest)';
+    public $loginName = 'string(64) optional';
+    public $passwordHash = 'string optional';
 
     public function setPassword( $password ) {
 

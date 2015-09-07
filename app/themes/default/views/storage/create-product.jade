@@ -1,0 +1,60 @@
+
+extends layout
+
+block storage-content
+    
+    .panel.panel-info
+        .panel-heading
+            h5.panel-title= $product->name
+        .panel-body
+
+            .row
+                .col-md-9
+
+                    .panel.panel-default
+                        .table-responsive
+                            table.table.table-bordered
+                                tr
+                                    th Name
+                                    td: h4.text-primary= $product->name
+                                tr
+                                    th Code
+                                    td: strong= $product->scan_code
+
+                    if count( $storageProducts )
+                        .panel.panel-default
+                            .table-responsive
+                                table.table.table-bordered.table-condensed.table-striped
+                                    thead
+                                        tr
+                                            th Lagerort
+                                            th Bestand
+                                            th Soll
+                                    tr
+                                        td: strong.text-primary Lagerraum
+                                        td.success: strong 24
+                                        td: strong 12
+                                    tr
+                                        td: strong.text-primary Kundenbaustelle 1
+                                        td.warning: strong 14
+                                        td: strong 12
+                                    tr
+                                        td: strong.text-primary Kundenbaustelle 2
+                                        td.danger: strong 10
+                                        td: strong 12
+                    else
+                        .alert.alert-info Dieses Produkt wurde bisher nicht eingelagert.
+
+                .col-md-3
+
+                    .pull-right
+                        .form-group
+                            button.btn.btn-lg.btn-block.btn-success: i.fa.fa-fw.fa-plus
+                        .form-group
+                            .input-group
+                                input(type='text', value='24').form-control.input-lg.text-center.text-success
+                                .input-group-addon Soll: 12
+                        .form-group
+                            button.btn.btn-lg.btn-block.btn-danger: i.fa.fa-fw.fa-minus
+                        .form-group
+                            button.btn.btn-lg.btn-block.btn-default Soll anpassen

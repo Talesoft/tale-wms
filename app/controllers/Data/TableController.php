@@ -45,19 +45,21 @@ class TableController extends ControllerBase
             ];
         }
 
-        return [
-            'title'     => "Tables in Database {$this->dbName}",
-            'databaseUrl' => $this->getUrl("data/database/get/{$this->dbName}.{{format}}"),
+        return $this->view([
+            'title'     => "Table Index of {$this->dbName}",
+            'databaseName' => $this->dbName,
+            'createUrl' => $this->getUrl("data/table/create/{{name}}.{{format}}", ['database' => $this->dbName]),
+            'databaseGetUrl' => $this->getUrl("data/database/get/{$this->dbName}.{{format}}"),
             'databaseIndexUrl' => $this->getUrl("data/database.{{format}}"),
             'tables' => $tables
-        ];
+        ]);
     }
 
     public function getAction($name = null)
     {
 
         if (!$name)
-            return $this->dispatchError('notFound');
+            return $this->dispatchError('not-found');
 
         $tbl = $this->db->getTable($name);
         $tblName = $tbl->getName();

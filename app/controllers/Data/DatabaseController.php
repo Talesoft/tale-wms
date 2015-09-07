@@ -29,10 +29,11 @@ class DatabaseController extends ControllerBase
             ];
         }
 
-        return [
+        return $this->view([
             'title'     => 'Databases in Data Source',
+            'createUrl' => $this->getUrl("data/database/create/{{name}}.{{format}}"),
             'databases' => $databases
-        ];
+        ]);
     }
 
     public function getAction($name = null)
@@ -58,7 +59,7 @@ class DatabaseController extends ControllerBase
         }
 
 
-        return [
+        return $this->view([
             'title' => "Database $dbName Info",
             'name' => $dbName,
             'exists' => $exists,
@@ -67,7 +68,7 @@ class DatabaseController extends ControllerBase
             'removeUrl' => $this->getUrl("data/database/remove/$dbName.{{format}}"),
             'tableIndexUrl' => $this->getUrl("data/table.{{format}}", ['database' => $dbName]),
             'tables' => $tables
-        ];
+        ]);
     }
 
     public function createAction($name = null)
@@ -86,13 +87,13 @@ class DatabaseController extends ControllerBase
             $created = true;
         }
 
-        return [
+        return $this->view([
             'title' => "Create Database $dbName",
             'name' => $dbName,
             'created' => $created,
             'indexUrl' => $this->getUrl('data/database.{{format}}'),
             'getUrl' => $this->getUrl("data/database/get/$dbName.{{format}}"),
-        ];
+        ]);
     }
 
     public function removeAction($name = null)
@@ -111,12 +112,13 @@ class DatabaseController extends ControllerBase
             $removed = true;
         }
 
-        return [
+
+        return $this->view([
             'title' => "Remove Database $dbName",
             'name' => $dbName,
             'removed' => $removed,
             'indexUrl' => $this->getUrl('data/database.{{format}}'),
             'getUrl' => $this->getUrl("data/database/get/$dbName.{{format}}"),
-        ];
+        ]);
     }
 }

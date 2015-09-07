@@ -1,0 +1,302 @@
+
+extends ../layout
+
+block append styles
+    style.
+
+        .product-container {
+            margin-top: 20px;
+        }
+
+        #codeInput {
+            background: #fcf8e3;
+            color: navy;
+        }
+
+        #sourceStorageButton, #sourceAmountIcon {
+            background: #f2dede;
+        }
+
+        #targetStorageButton, #targetAmountIcon {
+            background: #dff0d8;
+        }
+
+        .storage-container {
+            margin-top: 40px;
+        }
+
+        .storage-container .btn-group {
+            width: 100%;
+        }
+
+        .head-panel .btn {
+            text-align: left;
+            font-size: 2em;
+        }
+
+        .head-panel .dropdown-menu {
+            font-size: 2em;
+            width: 100%;
+        }
+
+        .options .dropdown-menu {
+            left: auto;
+            right: 0;
+            min-width: 230px;
+        }
+
+        .storage-products-table tr.active {
+            outline: 2px solid green;
+        }
+
+        .storage-select .dropdown-menu .fa {
+            color: #c0c0c0;
+        }
+
+        .storage-select .dropdown-menu .fa-long-arrow-right {
+            color: #66ee66;
+        }
+
+        .storage-select .dropdown-menu .fa-long-arrow-left {
+            color: #ee6666;
+        }
+
+block append scripts
+    script(src='#{baseUrl}/scripts/hot-keys.js')
+    script(src='#{baseUrl}/scripts/scan-codes.js')
+    script(src='#{baseUrl}/scripts/auth.js')
+    script.
+
+        (function( $ ) {
+
+            var $codeInput = $( '#codeInput' ),
+
+                $amountPanel = $( '#amountPanel' ),
+                $amountInput = $( '#amountInput' ),
+                $amountToggle = $( '#amountToggle' ),
+                $sourceRequiredText = $( '#sourceRequiredText' ),
+                $sourceRequiredAmount = $( '#sourceRequiredAmount' ),
+                $sourceAmountInput = $( '#sourceAmountInput' ),
+                $targetRequiredText = $( '#targetRequiredText' ),
+                $targetRequiredAmount = $( '#targetRequiredAmount' ),
+                $targetAmountInput = $( '#targetAmountInput' ),
+
+                $amountTransferButton = $( '#amountTransferButton' ),
+                $amountRetrieveButton = $( '#amountRetrieveButton' ),
+                $amountModButtons = $( '#amountModButtons' ),
+
+
+                $win = $( window );
+
+
+            $win.on( 'load', function() {
+
+                $( ':focus' ).blur();
+            });
+
+            $win.on( 'codeScan', function( e ) {
+
+                $codeInput.val( e.code );
+                $codeInput.trigger( 'change' );
+            });
+
+
+
+
+            $codeInput.on( 'change', function() {
+
+                window.location.href = $.lvs.url( 'storage/search/' + $( this ).val() );
+            });
+
+            $codeInput.add( $sourceAmountInput ).add( $targetAmountInput ).on( 'click', function() {
+
+                $( this ).select();
+            });
+
+            if( $sourceAmountInput.length && !parseInt( $sourceAmountInput.val() ) )
+                $amountTransferButton.add( $targetAmountInput ).disable();
+
+            if( $targetAmountInput.length && !parseInt( $targetAmountInput.val() ) )
+                $amountRetrieveButton.add( $sourceAmountInput ).disable();
+
+            $amountToggle.on( 'click', function( e ) {
+                e.preventDefault();
+
+                var $this = $( this );
+
+                var amount = parseInt( $sourceAmountInput.val() );
+                $sourceAmountInput.val( parseInt( $sourceRequiredAmount.text() ) );
+                $sourceRequiredAmount.text( amount );
+                amount = parseInt( $targetAmountInput.val() );
+                $targetAmountInput.val( parseInt( $targetRequiredAmount.text() ) );
+                $targetRequiredAmount.text( amount );
+
+                var requiredToggleText = $sourceRequiredText.data( 'toggle-text' );
+                $sourceRequiredText.data( 'toggle-text', $sourceRequiredText.text() );
+                $sourceRequiredText.text( requiredToggleText );
+                requiredToggleText = $targetRequiredText.data( 'toggle-text' );
+                $targetRequiredText.data( 'toggle-text', $targetRequiredText.text() );
+                $targetRequiredText.text( requiredToggleText );
+
+                var toggleText = $this.data( 'toggle-text' );
+                $this.data( 'toggle-text', $this.text() );
+                $this.text( toggleText );
+
+                if( !$amountPanel.data( 'required-mode' ) ) {
+
+                    $amountPanel.removeClass( 'panel-default' )
+                                .addClass( 'panel-danger' )
+                                .find( '.panel-body' )
+                                    .addClass( 'bg-danger' );
+
+                    $amountModButtons.hide();
+                    $amountPanel.data( 'required-mode', true );
+                } else {
+
+                    $amountPanel.addClass( 'panel-default' )
+                                .removeClass( 'panel-danger' )
+                                .find( '.panel-body' )
+                                    .removeClass( 'bg-danger' );
+
+                    $amountModButtons.show();
+                    $amountPanel.data( 'required-mode', false );
+                }
+
+                $targetAmountInput.focus();
+                $targetAmountInput.select();
+            });
+
+        })( jQuery );
+
+
+block append content
+
+    .container.storage-container
+
+        .panel.panel-default.head-panel
+            .panel-body
+                .row
+                    .col-md-6
+                        p.lead
+                            | Angemeldet als:
+                            strong= $user->name
+
+                    .col-md-6.text-right.text-info
+                        p.lead
+                            | Lagerverwaltung
+                            = $companyName
+                .row
+                    .col-md-5
+                        
+                        .btn-group.storage-select
+                            button.btn.btn-default.btn-lg.btn-block.dropdown-toggle#sourceStorageButton(data-toggle='dropdown')
+                                i.fa.fa-fw.fa-sign-out
+                                = $currentSourceStorage->name
+                            ul.dropdown-menu
+                                each $storage in $sourceStorages
+                                    li: a(href='#{baseUrl}/storage/set-source-storage/'.$storage->id.'?returnTo=#{requestPath}')
+                                        case $storage->type
+                                            when "source-only"
+                                                i.fa.fa-fw.fa-long-arrow-right
+                                            when "target-only"
+                                                i.fa.fa-fw.fa-long-arrow-left
+                                            when "person"
+                                                i.fa.fa-fw.fa-user
+                                            default
+                                                i.fa.fa-fw.fa-arrows-h
+                                        = $storage->name
+
+                    .col-md-5
+                        
+                        .btn-group.storage-select
+                            button.btn.btn-default.btn-lg.btn-block.dropdown-toggle#targetStorageButton(data-toggle='dropdown')
+                                i.fa.fa-fw.fa-sign-in
+                                = $currentTargetStorage->name
+                            ul.dropdown-menu
+                                each $storage in $targetStorages
+                                    li: a(href='#{baseUrl}/storage/set-target-storage/'.$storage->id.'?returnTo=#{requestPath}')
+                                        case $storage->type
+                                            when "source-only"
+                                                i.fa.fa-fw.fa-long-arrow-right
+                                            when "target-only"
+                                                i.fa.fa-fw.fa-long-arrow-left
+                                            when "person"
+                                                i.fa.fa-fw.fa-user
+                                            default
+                                                i.fa.fa-fw.fa-arrows-h
+                                        = $storage->name
+
+                    .col-md-2.options
+                        .btn-group
+                            button.btn.btn-default.btn-lg.btn-block.dropdown-toggle(data-toggle='dropdown')
+                                div.text-center
+                                    i.fa.fa-fw.fa-gear
+                            ul.dropdown-menu
+                                li: a(href='#{baseUrl}/index/logout')
+                                    i.fa.fa-fw.fa-lock
+                                    | Abmelden
+
+
+        .panel.panel-default
+            .panel-body
+                .row
+                    .col-md-8
+                        .input-group
+                            .input-group-addon: i.fa.fa-fw.fa-barcode
+                            input.form-control.input-block.input-lg#codeInput(placeholder='Scannen oder geben Sie einen Code ein', value= $codeInputValue)
+                    .col-md-2
+                        button.btn.btn-lg.btn-block.btn-hover#infoMode Info
+                    .col-md-2
+                        button.btn.btn-lg.btn-block.btn-default#transferMode Transfer
+
+        .product-container
+
+            block storage-content
+
+            
+            .panel.panel-success
+                .panel-heading
+                    h5.panel-title Die letzten Transfers des aktuellen Benutzers
+                table.table.table-bordered.table-striped.table-hover
+                    thead
+                        tr
+                            th 
+                                i.fa.fa-fw.fa-clock-o
+                                | Zeit
+                            th 
+                                i.fa.fa-fw.fa-tag
+                                | Produkt
+                            th 
+                                i.fa.fa-fw.fa-sign-out
+                                | Quelle
+                            th 
+                                i.fa.fa-fw.fa-sign-in
+                                | Ziel
+                            th 
+                                i.fa.fa-fw.fa-arrows-h
+                                | Menge
+                    tbody
+                        tr
+                            td 14:30
+                            td Ein Produkt-Name
+                            td Quell-Lager
+                            td Ziel-Lager
+                            td 24
+                        tr
+                            td 14:30
+                            td Ein Produkt-Name
+                            td Quell-Lager
+                            td Ziel-Lager
+                            td 24
+                        tr
+                            td 14:30
+                            td Ein Produkt-Name
+                            td Quell-Lager
+                            td Ziel-Lager
+                            td 24
+                        tr
+                            td 14:30
+                            td Ein Produkt-Name
+                            td Quell-Lager
+                            td Ziel-Lager
+                            td 24

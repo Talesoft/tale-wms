@@ -1,0 +1,86 @@
+
+extends layout
+
+
+block storage-content
+    
+    .panel(class='panel-'.$backgroundClass)
+        .panel-heading
+            h5.panel-title= $product->name
+        .panel-body
+
+            .row
+                .col-md-6
+
+                    .panel.panel-default
+                        .table-responsive
+                            table.table.table-bordered
+                                tr
+                                    th Name
+                                    td: h4.text-primary= $product->name
+                                tr
+                                    th Code
+                                    td: strong= $product->scan_code
+
+                    if count( $storageProducts )
+                        .panel.panel-default
+                            .table-responsive
+                                table.table.table-bordered.table-condensed.table-striped.storage-products-table
+                                    thead
+                                        tr
+                                            th Lagerort
+                                            th Bestand
+                                            th Soll
+                                    tbody
+                                        each $sp in $storageProducts
+                                            tr(class=( $sp->storage_id === $currentTargetStorage->id ? 'active' : '' ))
+                                                td: strong.text-primary= $sp->storage_name
+                                                td(class=$sp->background_class): strong= $sp->amount
+                                                td: strong= $sp->required_amount
+                    else
+                        .alert.alert-info Dieses Produkt wurde bisher nicht eingelagert.
+                .col-md-6
+
+                    .panel.panel-default#amountPanel
+                        .panel-body
+
+                            .pull-right
+                                .form-group
+                                    .input-group
+                                        .input-group-addon#sourceAmountIcon
+                                            i.fa.fa-fw.fa-sign-out
+                                        if $currentSourceStorage->type === 'source-only'
+                                            input.form-control.input-lg.text-center(value='∞', readonly)
+                                        else
+                                            input.form-control.input-lg.text-center#sourceAmountInput(type='text', value=( $sourceStorageProduct ? $sourceStorageProduct->amount : 0 ))
+                                            .input-group-addon
+                                                span#sourceRequiredText(data-toggle-text='Menge:') Soll: 
+                                                span#sourceRequiredAmount= $sourceStorageProduct ? $sourceStorageProduct->required_amount : 0
+                                            
+                                .form-group
+                                    .input-group
+                                        .input-group-addon#targetAmountIcon
+                                            i.fa.fa-fw.fa-sign-in
+                                        if $currentTargetStorage->type === 'target-only'
+                                            input.form-control.input-lg.text-center(value='∞', readonly)
+                                        else
+                                            input.form-control.input-lg.text-center#targetAmountInput(type='text', value=( $targetStorageProduct ? $targetStorageProduct->amount : 0 ))
+                                            .input-group-addon
+                                                span#targetRequiredText(data-toggle-text='Menge:') Soll: 
+                                                span#targetRequiredAmount= $targetStorageProduct ? $targetStorageProduct->required_amount : 0
+                                            
+
+                                unless $currentSourceStorage->type === 'source-only' && $currentTargetStorage->type === 'target-only'
+                                    .form-group#amountModButtons
+                                        .row
+                                            .col-md-6
+                                                a.btn.btn-lg.btn-block.btn-danger#amountRetrieveButton(href='#{baseUrl}/storage/retrieve-product/'.$product->scan_code)
+                                                    i.fa.fa-fw.fa-sign-out
+                                                    | Zurückziehen
+                                            .col-md-6
+                                                a.btn.btn-lg.btn-block.btn-success#amountTransferButton(href='#{baseUrl}/storage/transfer-product/'.$product->scan_code)
+                                                    i.fa.fa-fw.fa-sign-in
+                                                    | Übertragen
+                       
+                                    .form-group
+                                        button.btn.btn-lg.btn-block.btn-default#amountToggle(data-toggle-text='Speichern') Soll anpassen
