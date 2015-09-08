@@ -2,11 +2,11 @@
 doctype 5
 html(lang='de')
     head
-        title= $pageTitle
+        title WMS
 
         block styles
             link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css')
-            link(rel='stylesheet', href='#{baseUrl}/styles/bootstrap.theme.css')
+            link(rel='stylesheet', href=$view->getStyleUrl('bootstrap.theme.css'))
             link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css')
             style.
 
@@ -23,7 +23,6 @@ html(lang='de')
         block scripts
             script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js')
             script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js')
-            script(src='#{baseUrl}/scripts/common.js')
+            script(src=$view->getScriptUrl('common.js'))
             script.
-
-                (function( $ ) { $.lvs.options = !{jsOptions}; } )( jQuery );
+                (function($) { $.lvs.options = !{jsOptions}; })(jQuery);

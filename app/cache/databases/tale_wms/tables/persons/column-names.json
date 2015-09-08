@@ -1,1 +1,1 @@
-["first_name","last_name","login_name","password_hash","id","creation_time","last_edit_time","creator_person_id","editor_person_id"]
+["first_name","last_name","role","login_name","password_hash","id","creation_time","last_edit_time","creator_person_id","editor_person_id","scan_code"]

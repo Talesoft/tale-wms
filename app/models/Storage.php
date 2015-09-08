@@ -6,7 +6,8 @@ use Tale\App\ModelBase;
 use Tale\Wms\Model\TimestampTrait;
 
 
-class Storage extends ModelBase {
+class Storage extends ModelBase
+{
     use TimestampTrait;
     use CanonicalNameTrait;
     use ScanCodeTrait;

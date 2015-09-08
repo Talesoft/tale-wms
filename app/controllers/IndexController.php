@@ -7,16 +7,6 @@ use Tale\Wms\ControllerBase;
 
 class IndexController extends ControllerBase {
 
-    public function initRedirectReturn()
-    {
-
-        $this->addForm('redirectReturn', ['return' => 'text']);
-        $form = $this->getFilledForm('redirectReturn', Method::GET);
-        $return = $form->return->getValue();
-
-        $this->returnUrl = $this->getUrl($return);
-    }
-
 	public function indexAction() {
 
         return $this->redirect('storage');
@@ -25,8 +15,8 @@ class IndexController extends ControllerBase {
 	public function getLoginPersons()
 	{
 
-		foreach ($this->db->persons->selectArray(['loginName!' => null]) as $person)
-			yield $person->loginName => $person->firstName;
+		foreach ($this->db->persons->where(['loginName!' => null])->selectArray() as $person)
+			yield $person->loginName => $person->getFullName();
 	}
 
 	public function loginAction() {
@@ -41,23 +31,32 @@ class IndexController extends ControllerBase {
 
         if ($this->hasFormData(Method::POST)) {
 
-            $form = $this->getFilledForm(Method::POST);
+            $form = $this->getFilledForm('login', Method::POST);
 
-            var_dump($form);
+            $person = $this->db->persons->where(['loginName' => $form->loginName->getValue()])->selectOne();
+
+            if ($person) {
+
+                $this->session->personId = $person->id;
+
+                return $this->redirect('storage');
+            }
         }
+
+		$this->allPersons = $this->db->persons->where(['role' => ['admin', 'reader']])->select();
 
         $this->loginForm = $this->getForm('login');
 
         $errors = $this->loginForm->getErrors();
-		return [
+		return $this->view([
 			'success' => !count($errors),
             'errors' => $errors
-		];
+		]);
 	}
 
 	public function logoutAction() {
 
-		unset( $_SESSION[ 'userId' ] );
+		unset($this->session->personId);
 
 		return $this->redirect( 'index' );
 	}

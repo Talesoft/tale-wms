@@ -62,9 +62,9 @@ block append styles
         }
 
 block append scripts
-    script(src='#{baseUrl}/scripts/hot-keys.js')
-    script(src='#{baseUrl}/scripts/scan-codes.js')
-    script(src='#{baseUrl}/scripts/auth.js')
+    script(src=$view->getScriptUrl('hot-keys.js'))
+    script(src=$view->getScriptUrl('scan-codes.js'))
+    script(src=$view->getScriptUrl('auth.js'))
     script.
 
         (function( $ ) {

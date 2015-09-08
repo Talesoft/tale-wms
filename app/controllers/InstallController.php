@@ -15,6 +15,9 @@ class InstallController extends ControllerBase
 
         $this->db->persons->migrate();
         $this->db->storages->migrate();
+        $this->db->products->migrate();
+        $this->db->storageProducts->migrate();
+        $this->db->transfers->migrate();
 
         return 'Installed';
     }
@@ -26,6 +29,8 @@ class InstallController extends ControllerBase
         $this->indexAction();
         $this->seedStoragesAction();
         $this->seedPersonsAction();
+        $this->seedProductsAction();
+        $this->seedStorageProductsActon();
 
         return 'Installed fully';
     }
@@ -59,5 +64,40 @@ class InstallController extends ControllerBase
         $persons->insertRow(['firstName' => 'Mitarbeiter 8', 'loginName' => 'mitarbeiter-8', 'role' => 'guest'], false)->setPassword('ma')->create();
 
         return 'Persons seeded';
+    }
+
+    public function seedProductsAction()
+    {
+
+        $products = $this->db->products;
+        $products->insertRow(['name' => 'Test Produkt 1', 'description' => 'Beschreibung zum Test Produkt 1']);
+        $products->insertRow(['name' => 'Test Produkt 2', 'description' => 'Beschreibung zum Test Produkt 2']);
+        $products->insertRow(['name' => 'Test Produkt 3', 'description' => 'Beschreibung zum Test Produkt 3']);
+        $products->insertRow(['name' => 'Test Produkt 4', 'description' => 'Beschreibung zum Test Produkt 4']);
+        $products->insertRow(['name' => 'Test Produkt 5', 'description' => 'Beschreibung zum Test Produkt 5']);
+        $products->insertRow(['name' => 'Test Produkt 6', 'description' => 'Beschreibung zum Test Produkt 6']);
+        $products->insertRow(['name' => 'Test Produkt 7', 'description' => 'Beschreibung zum Test Produkt 7']);
+    }
+
+    public function seedStorageProductsActon()
+    {
+
+        foreach ($this->db->products->select() as $product) {
+
+            foreach ($this->db->storages->select() as $storage) {
+
+                if (mt_rand(0, 100) <= 90) {
+
+                    $rand = mt_rand(5, 100);
+                    $req = max(0, $rand + mt_rand(-10, 10));
+                    $this->db->storageProducts->insertRow([
+                        'storageId' => $storage->id,
+                        'productId' => $product->id,
+                        'amount' => $rand,
+                        'requiredAmount' => $req
+                    ]);
+                }
+            }
+        }
     }
 }

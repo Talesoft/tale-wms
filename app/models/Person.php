@@ -17,6 +17,12 @@ class Person extends ModelBase {
     public $loginName = 'string(64) optional';
     public $passwordHash = 'string optional';
 
+    public function getFullName()
+    {
+
+        return $this->firstName.( $this->lastName ? " $this->lastName" : '');
+    }
+
     public function setPassword( $password ) {
 
         $this->passwordHash = password_hash( $password, \PASSWORD_DEFAULT );

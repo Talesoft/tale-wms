@@ -11,8 +11,8 @@ block append styles
 
 
 block append scripts
-	script(src='#{baseUrl}/scripts/hot-keys.js')
-	script(src='#{baseUrl}/scripts/scan-codes.js')
+	script(src=$view->getScriptUrl('hot-keys.js'))
+	script(src=$view->getScriptUrl('scan-codes.js'))
 	script.
 
 		(function( $ ) {
@@ -22,12 +22,12 @@ block append scripts
 			$( window ).on( 'codeScan', function( e ) {
 
 				$loginForm.disable();
-				$.post( '#{baseUrl}/index/scan-code-login.json', { scanCode: e.code }, function( result ) {
+				$.post( $.lvs.options.baseUrl + '/index/scan-code-login.json', { scanCode: e.code }, function( result ) {
 
 					$loginForm.enable();
 
 					if( result.success )
-						window.location.href = '#{baseUrl}/index';
+						window.location.href = $.lvs.options.baseUrl + '/index';
 					else
 						window.alert( "Fehler:\n" + result.errors.join( "\n" ) );
 				});
@@ -48,7 +48,7 @@ block content
 					.panel-heading
 						h2.panel-title Login
 
-					form.login-form.form.form-horizontal(action='#{baseUrl}/index/login', method='post', enctype='application/x-www-form-urlencoded')
+					form.login-form.form.form-horizontal(action=$view->getUrl('index/login'), method='post', enctype='application/x-www-form-urlencoded')
 
 						.panel-body
 
@@ -56,7 +56,7 @@ block content
 								strong Benutzer auswählen
 								p Bitte wählen Sie unten einen Benutzer aus oder scannen Sie alternativ den Code auf Ihrem Badge
 
-							if $triedLogin && !$success
+							//- if $triedLogin && !$success
 								.alert.alert-warning
 									ul
 									each $error in $errors
@@ -65,9 +65,10 @@ block content
 							.form-group
 								label.control-label.col-md-3 Benutzer:
 								.col-md-9
-									select.form-control(name='userId')
-										each $user in $allUsers
-											option(value=$user->id)= $user->name
+									select.form-control(name='loginName')
+										each $person in $allPersons
+											option(value=$person->loginName)= $person->getFullName()
+
 						.panel-footer
 							button.btn.btn-primary.btn-block.btn-lg(type='submit') 
 								i.fa.fa-fw.fa-unlock-alt
